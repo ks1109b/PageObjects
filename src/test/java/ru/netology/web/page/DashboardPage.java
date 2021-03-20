@@ -13,7 +13,7 @@ public class DashboardPage {
     static CardInfo firstCardInfo = getFirstCardInfo();
     static CardInfo secondCardInfo = getSecondCardInfo();
 
-    public DashboardPage() {
+    DashboardPage() {
         SelenideElement heading = $("[data-test-id=dashboard]");
         heading.shouldBe(visible);
     }

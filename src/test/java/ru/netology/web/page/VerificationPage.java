@@ -10,7 +10,7 @@ public class VerificationPage {
     private static final SelenideElement codeField = $("[data-test-id=code] input");
     private static final SelenideElement verifyButton = $("[data-test-id=action-verify]");
 
-    public VerificationPage() {
+    VerificationPage() {
         codeField.shouldBe(visible);
     }
 

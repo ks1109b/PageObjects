@@ -17,7 +17,13 @@ public class MoneyTransferPage {
     private static final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
     private static final SelenideElement errorInsufficientFunds = $(withText("Недостаточно средств"));
     private static final SelenideElement errorNoneAmount = $(withText("Укажите сумму"));
-    private static final SelenideElement errorInvalidCard = $(withText("Укажите карту"));
+    private static final SelenideElement errorInvalidCard = $(withText("Укажите корректный номер карты"));
+    private static final SelenideElement errorEmptyForm = $("[data-test-id=error-notification]");
+
+    MoneyTransferPage() {
+        SelenideElement heading = $("[data-test-id=dashboard]");
+        heading.shouldBe(visible);
+    }
 
     public static void getErrorInsufficientFunds() {
         errorInsufficientFunds.shouldBe(visible);
@@ -31,12 +37,12 @@ public class MoneyTransferPage {
         errorInvalidCard.shouldBe(visible);
     }
 
-    public MoneyTransferPage() {
-        SelenideElement heading = $("[data-test-id=dashboard]");
-        heading.shouldBe(visible);
+    public static void getErrorEmptyForm(){
+        transferButton.click();
+        errorEmptyForm.shouldBe(visible).shouldHave(text("Произошла ошибка"));
     }
 
-    public static void topUpCard(int amount, CardInfo from, CardInfo to) {
+    public static void topUpCard(Integer amount, CardInfo from, CardInfo to) {
         amountField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
         amountField.setValue(Integer.toString(amount));
         fromField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);

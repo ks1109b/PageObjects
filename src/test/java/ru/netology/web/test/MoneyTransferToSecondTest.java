@@ -24,7 +24,10 @@ class MoneyTransferToSecondTest {
     }
 
     @AfterEach
-    void returnInitialData() {
+    void returnInitialData(TestInfo testInfo) {
+        if (testInfo.getTags().contains("SkipCleanup")) {
+            return;
+        }
         getInitialData();
     }
 
@@ -64,5 +67,11 @@ class MoneyTransferToSecondTest {
     @Test
     void shouldCancelTransaction() {
         cancelTransaction();
+    }
+
+    @Test
+    @Tag("SkipCleanup")
+    void shouldGetErrorIfEmptyForm() {
+        getErrorEmptyForm();
     }
 }
