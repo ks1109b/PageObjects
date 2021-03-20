@@ -15,10 +15,20 @@ public class MoneyTransferPage {
     private static final SelenideElement toField = $("[data-test-id='to'] .input__control");
     private static final SelenideElement transferButton = $("[data-test-id='action-transfer']");
     private static final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
-    private static final SelenideElement errorMessage = $(withText("Недостаточно средств"));
+    private static final SelenideElement errorInsufficientFunds = $(withText("Недостаточно средств"));
+    private static final SelenideElement errorNoneAmount = $(withText("Укажите сумму"));
+    private static final SelenideElement errorInvalidCard = $(withText("Укажите карту"));
 
-    public static void getError() {
-        errorMessage.shouldBe(visible);
+    public static void getErrorInsufficientFunds() {
+        errorInsufficientFunds.shouldBe(visible);
+    }
+
+    public static void getErrorNoneAmount() {
+        errorNoneAmount.shouldBe(visible);
+    }
+
+    public static void getErrorInvalidCard() {
+        errorInvalidCard.shouldBe(visible);
     }
 
     public MoneyTransferPage() {
@@ -39,5 +49,10 @@ public class MoneyTransferPage {
     public static void validToField(CardInfo to) {
         String value = "**** **** **** " + to.getNumber().substring(15);
         toField.shouldHave(value(value));
+    }
+
+    public static void cancelTransaction() {
+        cancelButton.click();
+        new DashboardPage();
     }
 }
