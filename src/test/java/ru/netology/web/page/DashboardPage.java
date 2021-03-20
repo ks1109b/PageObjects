@@ -49,12 +49,12 @@ public class DashboardPage {
         if (firstCardBalance > secondCardBalance) {
             int amount = (firstCardBalance + secondCardBalance) / 2 - secondCardBalance;
             clickTopUpButton(secondCardInfo);
-            topUpCard(amount, firstCardInfo);
+            topUpCard(amount, firstCardInfo, secondCardInfo);
         } else {
             if (firstCardBalance < secondCardBalance) {
                 int amount = (secondCardBalance + firstCardBalance) / 2 - firstCardBalance;
                 clickTopUpButton(firstCardInfo);
-                topUpCard(amount, secondCardInfo);
+                topUpCard(amount, secondCardInfo, firstCardInfo);
             }
         }
         new DashboardPage();

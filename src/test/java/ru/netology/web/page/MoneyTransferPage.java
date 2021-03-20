@@ -2,9 +2,10 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.*;
 import org.openqa.selenium.Keys;
-import ru.netology.web.data.DataHelper;
+import ru.netology.web.data.DataHelper.CardInfo;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MoneyTransferPage {
@@ -14,18 +15,29 @@ public class MoneyTransferPage {
     private static final SelenideElement toField = $("[data-test-id='to'] .input__control");
     private static final SelenideElement transferButton = $("[data-test-id='action-transfer']");
     private static final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
+    private static final SelenideElement errorMessage = $(withText("Недостаточно средств"));
+
+    public static void getError() {
+        errorMessage.shouldBe(visible);
+    }
 
     public MoneyTransferPage() {
         SelenideElement heading = $("[data-test-id=dashboard]");
         heading.shouldBe(visible);
     }
 
-    public static void topUpCard(int amount, DataHelper.CardInfo card) {
+    public static void topUpCard(int amount, CardInfo from, CardInfo to) {
         amountField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
         amountField.setValue(Integer.toString(amount));
         fromField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
-        fromField.setValue(card.getNumber());
+        fromField.setValue(from.getNumber());
+        validToField(to);
         transferButton.click();
         new DashboardPage();
+    }
+
+    public static void validToField(CardInfo to) {
+        String value = "**** **** **** " + to.getNumber().substring(15);
+        toField.shouldHave(value(value));
     }
 }
