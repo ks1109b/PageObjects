@@ -10,9 +10,6 @@ public class LoginPage {
     private static final SelenideElement passwordField = $("[data-test-id=password] input");
     private static final SelenideElement loginButton = $("[data-test-id=action-login]");
 
-    public LoginPage() {
-    }
-
     public static VerificationPage validLogin(DataHelper.AuthInfo info) {
         loginField.setValue(info.getLogin());
         passwordField.setValue(info.getPassword());

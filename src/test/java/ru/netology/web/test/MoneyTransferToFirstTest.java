@@ -18,9 +18,8 @@ class MoneyTransferToFirstTest {
     @BeforeEach
     void setUp() {
         open("http://localhost:9999");
-        AuthInfo authInfo = getAuthInfo();
-        LoginPage.validLogin(authInfo);
-        VerificationPage.validVerify(getVerificationCodeFor(authInfo));
+        LoginPage.validLogin(getAuthInfo());
+        VerificationPage.validVerify(getVerificationCode());
         clickTopUpButton(firstCardInfo);
     }
 
