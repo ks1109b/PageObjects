@@ -10,39 +10,39 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class MoneyTransferPage {
 
-    private static final SelenideElement amountField = $("[data-test-id='amount'] .input__control");
-    private static final SelenideElement fromField = $("[data-test-id='from'] .input__control");
-    private static final SelenideElement toField = $("[data-test-id='to'] .input__control");
-    private static final SelenideElement transferButton = $("[data-test-id='action-transfer']");
-    private static final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
-    private static final SelenideElement errorInsufficientFunds = $(withText("Недостаточно средств"));
-    private static final SelenideElement errorNoneAmount = $(withText("Укажите сумму"));
-    private static final SelenideElement errorInvalidCard = $(withText("Укажите корректный номер карты"));
-    private static final SelenideElement errorEmptyForm = $("[data-test-id=error-notification]");
+    private final SelenideElement amountField = $("[data-test-id='amount'] .input__control");
+    private final SelenideElement fromField = $("[data-test-id='from'] .input__control");
+    private final SelenideElement toField = $("[data-test-id='to'] .input__control");
+    private final SelenideElement transferButton = $("[data-test-id='action-transfer']");
+    private final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
+    private final SelenideElement errorInsufficientFunds = $(withText("Недостаточно средств"));
+    private final SelenideElement errorNoneAmount = $(withText("Укажите сумму"));
+    private final SelenideElement errorInvalidCard = $(withText("Укажите корректный номер карты"));
+    private final SelenideElement errorEmptyForm = $("[data-test-id=error-notification]");
 
-    MoneyTransferPage() {
+    public MoneyTransferPage() {
         SelenideElement heading = $("[data-test-id=dashboard]");
         heading.shouldBe(visible);
     }
 
-    public static void getErrorInsufficientFunds() {
+    public void getErrorInsufficientFunds() {
         errorInsufficientFunds.shouldBe(visible);
     }
 
-    public static void getErrorNoneAmount() {
+    public void getErrorNoneAmount() {
         errorNoneAmount.shouldBe(visible);
     }
 
-    public static void getErrorInvalidCard() {
+    public void getErrorInvalidCard() {
         errorInvalidCard.shouldBe(visible);
     }
 
-    public static void getErrorEmptyForm(){
+    public void getErrorEmptyForm(){
         transferButton.click();
         errorEmptyForm.shouldBe(visible).shouldHave(text("Произошла ошибка"));
     }
 
-    public static void topUpCard(Integer amount, CardInfo from, CardInfo to) {
+    public void topUpCard(Integer amount, CardInfo from, CardInfo to) {
         amountField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
         amountField.setValue(Integer.toString(amount));
         fromField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
@@ -52,12 +52,12 @@ public class MoneyTransferPage {
         new DashboardPage();
     }
 
-    public static void validToField(CardInfo to) {
+    public void validToField(CardInfo to) {
         String value = "**** **** **** " + to.getNumber().substring(15);
         toField.shouldHave(value(value));
     }
 
-    public static void cancelTransaction() {
+    public void cancelTransaction() {
         cancelButton.click();
         new DashboardPage();
     }

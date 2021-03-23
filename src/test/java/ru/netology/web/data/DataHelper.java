@@ -1,6 +1,9 @@
 package ru.netology.web.data;
 
 import lombok.Value;
+import lombok.val;
+import ru.netology.web.page.DashboardPage;
+import ru.netology.web.page.MoneyTransferPage;
 
 public class DataHelper {
     private DataHelper() {
@@ -37,5 +40,25 @@ public class DataHelper {
 
     public static CardInfo getSecondCardInfo() {
         return new CardInfo("0f3f5c2a-249e-4c3d-8287-09f7a039391d", "5559 0000 0000 0002");
+    }
+
+    public static void getInitialData(DashboardPage dashboardPage, CardInfo firstCardInfo, CardInfo secondCardInfo) {
+        val moneyTransferPage = new MoneyTransferPage();
+
+        int firstCardBalance = dashboardPage.getCardBalance(firstCardInfo);
+        int secondCardBalance = dashboardPage.getCardBalance(secondCardInfo);
+
+        if (firstCardBalance > secondCardBalance) {
+            int amount = (firstCardBalance + secondCardBalance) / 2 - secondCardBalance;
+            dashboardPage.clickTopUpButton(secondCardInfo);
+            moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
+        } else {
+            if (firstCardBalance < secondCardBalance) {
+                int amount = (secondCardBalance + firstCardBalance) / 2 - firstCardBalance;
+                dashboardPage.clickTopUpButton(firstCardInfo);
+                moneyTransferPage.topUpCard(amount, secondCardInfo, firstCardInfo);
+            }
+        }
+        new DashboardPage();
     }
 }
