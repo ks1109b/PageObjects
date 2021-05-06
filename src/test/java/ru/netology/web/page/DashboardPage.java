@@ -29,13 +29,11 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
 
-    public void clickTopUpButton(CardInfo card) {
+    public MoneyTransferPage clickTopUpButton(CardInfo card) {
         String id = card.getId();
         $("[data-test-id='" + id + "']")
                 .find("[data-test-id='action-deposit']")
                 .click();
-        new MoneyTransferPage();
+        return new MoneyTransferPage();
     }
-
-
 }

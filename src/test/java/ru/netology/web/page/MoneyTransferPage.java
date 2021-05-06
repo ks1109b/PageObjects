@@ -42,14 +42,14 @@ public class MoneyTransferPage {
         errorEmptyForm.shouldBe(visible).shouldHave(text("Произошла ошибка"));
     }
 
-    public void topUpCard(Integer amount, CardInfo from, CardInfo to) {
+    public DashboardPage topUpCard(Integer amount, CardInfo from, CardInfo to) {
         amountField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
         amountField.setValue(Integer.toString(amount));
         fromField.sendKeys(Keys.chord(Keys.CONTROL, "A"), Keys.DELETE);
         fromField.setValue(from.getNumber());
         validToField(to);
         transferButton.click();
-        new DashboardPage();
+        return new DashboardPage();
     }
 
     public void validToField(CardInfo to) {
@@ -57,8 +57,8 @@ public class MoneyTransferPage {
         toField.shouldHave(value(value));
     }
 
-    public void cancelTransaction() {
+    public DashboardPage cancelTransaction() {
         cancelButton.click();
-        new DashboardPage();
+        return new DashboardPage();
     }
 }

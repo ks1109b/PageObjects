@@ -20,9 +20,7 @@ class MoneyTransferToSecondTest {
     void setUp() {
         open("http://localhost:9999");
         LoginPage loginPage = new LoginPage();
-
-        loginPage.validLogin(getAuthInfo());
-        VerificationPage verificationPage = new VerificationPage();
+        VerificationPage verificationPage = loginPage.validLogin(getAuthInfo());
 
         verificationPage.validVerify(getVerificationCode());
         dashboardPage = new DashboardPage();
@@ -51,7 +49,6 @@ class MoneyTransferToSecondTest {
     void shouldGetErrorIfAboveLimit() {
         int amount = 11000;
         moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
-
         moneyTransferPage.getErrorInsufficientFunds();
     }
 
@@ -59,7 +56,6 @@ class MoneyTransferToSecondTest {
     void shouldGetErrorIfAmountNull() {
         int amount = 0;
         moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
-
         moneyTransferPage.getErrorNoneAmount();
     }
 
@@ -67,7 +63,6 @@ class MoneyTransferToSecondTest {
     void shouldGetErrorIfSameCard() {
         int amount = 500;
         moneyTransferPage.topUpCard(amount, secondCardInfo, secondCardInfo);
-
         moneyTransferPage.getErrorInvalidCard();
     }
 
