@@ -19,8 +19,8 @@ class MoneyTransferToSecondTest {
     @BeforeEach
     void setUp() {
         open("http://localhost:9999");
-        LoginPage loginPage = new LoginPage();
-        VerificationPage verificationPage = loginPage.validLogin(getAuthInfo());
+        val loginPage = new LoginPage();
+        val verificationPage = loginPage.validLogin(getAuthInfo());
 
         verificationPage.validVerify(getVerificationCode());
         dashboardPage = new DashboardPage();
@@ -38,7 +38,7 @@ class MoneyTransferToSecondTest {
 
     @Test
     void shouldSuccessIfBelowLimit() {
-        int amount = 1000;
+        val amount = 1000;
         moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
 
         assertEquals(parseInt("11000"), dashboardPage.getCardBalance(secondCardInfo));
@@ -47,21 +47,21 @@ class MoneyTransferToSecondTest {
 
     @Test
     void shouldGetErrorIfAboveLimit() {
-        int amount = 11000;
+        val amount = 11000;
         moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
         moneyTransferPage.getErrorInsufficientFunds();
     }
 
     @Test
     void shouldGetErrorIfAmountNull() {
-        int amount = 0;
+        val amount = 0;
         moneyTransferPage.topUpCard(amount, firstCardInfo, secondCardInfo);
         moneyTransferPage.getErrorNoneAmount();
     }
 
     @Test
     void shouldGetErrorIfSameCard() {
-        int amount = 500;
+        val amount = 500;
         moneyTransferPage.topUpCard(amount, secondCardInfo, secondCardInfo);
         moneyTransferPage.getErrorInvalidCard();
     }
